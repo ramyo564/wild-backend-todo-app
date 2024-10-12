@@ -21,10 +21,11 @@ public class TaskController {
     public TaskController(Todo todo) {
         this.todo = todo;
     }
-    
+
     @GetMapping
-    public List<TodoElements> list() {
-        return todo.getTodoList();
+    public TodoListResponseDto list() {
+        List<TodoElements> todoList = todo.getTodoList();
+        return TodoListResponseDto.of(todoList);
     }
 
     @PostMapping
