@@ -5,8 +5,11 @@ import com.example.demo.infrastructure.TodoElements;
 import com.example.demo.presentation.dto.TodoListResponseDto;
 import com.example.demo.presentation.dto.TodoRequestDto;
 import com.example.demo.presentation.dto.TodoResponseDto;
+import com.example.demo.presentation.dto.TodoUpdateRequestDto;
+import com.example.demo.presentation.dto.TodoUpdatedResponseDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,6 +39,23 @@ public class TaskController {
         TodoElements todoElements = todo.createTask(
                 todoRequestDto.title(), todoRequestDto.content());
         return new TodoResponseDto(
+                todoElements.getId(),
+                todoElements.getTitle(),
+                todoElements.getContent(),
+                todoElements.getCreatedAt()
+        );
+    }
+
+    @PutMapping
+    public TodoUpdatedResponseDto update(
+            @RequestBody
+            TodoUpdateRequestDto todoUpdateRequestDto
+    ) {
+        TodoElements todoElements = todo.update(
+                todoUpdateRequestDto.id(),
+                todoUpdateRequestDto.title(),
+                todoUpdateRequestDto.content());
+        return new TodoUpdatedResponseDto(
                 todoElements.getId(),
                 todoElements.getTitle(),
                 todoElements.getContent(),

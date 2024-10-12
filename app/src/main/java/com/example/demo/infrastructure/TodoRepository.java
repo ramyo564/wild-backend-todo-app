@@ -5,9 +5,11 @@ import java.util.List;
 public interface TodoRepository {
     List<TodoElements> getAll();
 
+    TodoElements getById(String id);
+
     void create(TodoElements todoElements);
 
-    void edit();
+    void save(TodoElements updatedTodo);
 
     void taskDone();
 

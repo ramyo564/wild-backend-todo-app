@@ -62,4 +62,17 @@ public class TodoElements {
     public String getTitle() {
         return title;
     }
+
+    public TodoElements updateTodo(String newTitle, String newContent) {
+        return new TodoElements(
+                this.id,
+                newTitle,
+                newContent,
+                this.isDeleted,
+                this.taskDone,
+                this.createdAt,
+                LocalDateTime.now(),
+                this.deletedAt
+        );
+    }
 }
