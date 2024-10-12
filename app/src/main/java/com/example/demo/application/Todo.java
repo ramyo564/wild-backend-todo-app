@@ -25,7 +25,7 @@ public class Todo {
                 .collect(Collectors.toList());
     }
 
-    public List<TodoElements> getFiishedList() {
+    public List<TodoElements> getFinishedList() {
         return todoRepository.getAll().stream().filter(
                 todoElement -> todoElement.isTaskDone() && !todoElement.isDeleted())
                 .collect(Collectors.toList());
