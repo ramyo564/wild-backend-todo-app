@@ -5,7 +5,7 @@ import java.util.List;
 public interface TodoRepository {
     List<TodoElements> getAll();
 
-    void create();
+    void create(TodoElements todoElements);
 
     void edit();
 

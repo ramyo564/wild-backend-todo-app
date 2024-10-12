@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class InMemoryTodoRepository implements TodoRepository{
+public class InMemoryTodoRepository implements TodoRepository {
     private final List<TodoElements> todo = new ArrayList<>();
 
     @Override
@@ -15,8 +15,8 @@ public class InMemoryTodoRepository implements TodoRepository{
     }
 
     @Override
-    public void create() {
-
+    public void create(TodoElements todoElements) {
+        todo.add(todoElements);
     }
 
     @Override
