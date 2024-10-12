@@ -8,6 +8,7 @@ import com.example.demo.presentation.dto.TodoResponseDto;
 import com.example.demo.presentation.dto.TodoTaskDoneResponseDto;
 import com.example.demo.presentation.dto.TodoUpdateRequestDto;
 import com.example.demo.presentation.dto.TodoUpdatedResponseDto;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -73,7 +74,7 @@ public class TaskController {
     }
 
     @PatchMapping("/{taskId}")
-    public TodoTaskDoneResponseDto update(
+    public TodoTaskDoneResponseDto taskDone(
             @PathVariable String taskId
     ) {
         TodoElements todoTaskDoneResponse = todo.taskDone(taskId);
@@ -85,4 +86,6 @@ public class TaskController {
                 todoTaskDoneResponse.isTaskDone()
         );
     }
+
+
 }
