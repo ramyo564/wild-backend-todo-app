@@ -1,26 +1,28 @@
 package com.example.demo.infrastructure;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class TodoElements {
     private String id;
+    private String title;
     private String content;
     private boolean isDeleted;
     private boolean taskDone;
-    private Date createdAt;
-    private Date updatedAt;
-    private Date deletedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime deletedAt;
 
     public TodoElements(
-            String id,
+            String id, String title,
             String content,
             boolean isDeleted,
             boolean taskDone,
-            Date createdAt,
-            Date updatedAt,
-            Date deletedAt
+            LocalDateTime createdAt,
+            LocalDateTime updatedAt,
+            LocalDateTime deletedAt
     ) {
         this.id = id;
+        this.title = title;
         this.content = content;
         this.isDeleted = isDeleted;
         this.taskDone = taskDone;
@@ -45,15 +47,19 @@ public class TodoElements {
         return taskDone;
     }
 
-    public Date getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public Date getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public Date getDeletedAt() {
+    public LocalDateTime getDeletedAt() {
         return deletedAt;
+    }
+
+    public String getTitle() {
+        return title;
     }
 }
