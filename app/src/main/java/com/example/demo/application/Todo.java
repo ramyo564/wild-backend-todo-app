@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @Component
@@ -18,7 +19,13 @@ public class Todo {
     }
 
     public List<TodoElements> getTodoList() {
-        return todoRepository.getAll();
+        return todoRepository.getAll().stream().filter(todoElement -> !todoElement.isTaskDone())
+                .collect(Collectors.toList());
+    }
+
+    public List<TodoElements> getFilishedList() {
+        return todoRepository.getAll().stream().filter(TodoElements::isTaskDone)
+                .collect(Collectors.toList());
     }
 
     public TodoElements createTask(String title, String content) {
@@ -43,4 +50,5 @@ public class Todo {
         todoRepository.save(todo.updateTodo(title, content));
         return todo.updateTodo(title, content);
     }
+
 }
