@@ -1,261 +1,265 @@
 openapi: 3.0.3
 info:
-  title: Extreme To-do service API
-  description: |-
-    todo list에 할 일을 쌓아두기만? -> X <br>
-    하루에 중요한 할 일 <b>딱 10개만</b> 관리하는 todo list! <br>
-    <br>
-    지금 해야 할 일이 이미 10개 이상인가요? <br>
-    그럼 그중에서도 <b>가장 급한 일 10개부터 끝내고 생각하세요!</b>
+    title: Extreme To-do service API
+    description: |-
+        todo list에 할 일을 쌓아두기만? -> X <br>
+        하루에 중요한 할 일 <b>딱 10개만</b> 관리하는 todo list! <br>
+        <br>
+        지금 해야 할 일이 이미 10개 이상인가요? <br>
+        그럼 그중에서도 <b>가장 급한 일 10개부터 끝내고 생각하세요!</b>
 
-  version: 1.0.0
+    version: 1.0.0
 servers:
-  - url: http://localhost:8080
+    - url: http://localhost:8080
 tags:
-  - name: API
-    description: 기본적인 API
+    - name: API
+      description: 기본적인 API
 paths:
-  /:
-    get:
-      tags:
-        - API
-      summary: Health check
-      description: |
-        API 서버가 잘 작동하는지 확인하는 용도의 API.
-      responses:
-        '200':
-          description: 멀쩡함.
-  /tasks:
-    get:
-      tags:
-        - API
-      summary: Get all tasks
-      description: |
-        할 일 목록을 얻는다.
-      responses:
-        '200':
-          description: 할 일 목록을 올바르게 얻음.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  tasks:
-                    type: array
-                    description: 할 일 목록 배열
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          description: Task의 식별자
-                          example: 01BX5ZZKBKACTAV9WEVGEMMVRY
-                        title:
-                          type: string
-                          description: 할 일에 대한 간단한 설명
-                          example: 과제하기
-                        contents:
-                          type: string
-                          description: 자세한 설명
-                          example: 1강부터 3강까지 공부해야함
-                        createdAt:
-                          type: string
-                          description: 할 일 등록 일시 (UTC)
-                          example: "2024-10-01 12:34:56"
-              example:
-                tasks:
-                  - id: "01BX5ZZKBKACTAV9WEVGEMMVRY"
-                    title: "과제하기"
-                    contents: "1강부터 3강까지 공부해야함"
-                    createdAt: "2024-10-01 12:34:56"
-                  - id: "01BX5ZZKBKACTAV9WEVGEMMVZZ"
-                    title: "알고리즘 공부하기"
-                    contents: "3시까지 정렬, 해시맵 공부"
-                    createdAt: "2024-10-02 14:22:00"
+    /:
+        get:
+            tags:
+                - API
+            summary: Health check
+            description: |
+                API 서버가 잘 작동하는지 확인하는 용도의 API.
+            responses:
+                '200':
+                    description: 멀쩡함.
+    /tasks:
+        get:
+            tags:
+                - API
+            summary: Get all tasks
+            description: |
+                할 일 목록을 얻는다.
+            responses:
+                '200':
+                    description: 할 일 목록을 올바르게 얻음.
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    tasks:
+                                        type: array
+                                        description: 할 일 목록 배열
+                                        items:
+                                            type: object
+                                            properties:
+                                                id:
+                                                    type: string
+                                                    description: Task의 식별자
+                                                    example: 01BX5ZZKBKACTAV9WEVGEMMVRY
+                                                title:
+                                                    type: string
+                                                    description: 할 일에 대한 간단한 설명
+                                                    example: 과제하기
+                                                contents:
+                                                    type: string
+                                                    description: 자세한 설명
+                                                    example: 1강부터 3강까지 공부해야함
+                                                createdAt:
+                                                    type: string
+                                                    description: 할 일 등록 일시 (UTC)
+                                                    example: "2024-10-01 12:34:56"
+                            example:
+                                tasks:
+                                    - id: "01BX5ZZKBKACTAV9WEVGEMMVRY"
+                                      title: "과제하기"
+                                      contents: "1강부터 3강까지 공부해야함"
+                                      createdAt: "2024-10-01 12:34:56"
+                                    - id: "01BX5ZZKBKACTAV9WEVGEMMVZZ"
+                                      title: "알고리즘 공부하기"
+                                      contents: "3시까지 정렬, 해시맵 공부"
+                                      createdAt: "2024-10-02 14:22:00"
 
-    post:
-      tags:
-        - API
-      summary: Create a task
-      description: |
-        할 일 목록을 만들기
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                title:
-                  type: string
-                  description: 제목
-                  example: "과제하기"
-                contents:
-                  type: string
-                  description: 내용
-                  example: "1강부터 3강까지 공부해야함"
-      responses:
-        '200':
-          description: 할 일을 성공적으로 생성함.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    description: Task의 식별자
-                    example: 01BX5ZZKBKACTAV9WEVGEMMVRY
-                  title:
-                    type: string
-                    description: 할 일에 대한 간단한 설명
-                    example: 과제하기
-                  contents:
-                    type: string
-                    description: 자세한 설명
-                    example: 1강부터 3강까지 공부해야함
-                  createdAt:
-                    type: string
-                    description: 할 일 등록 일시 (UTC)
-                    example: "2024-10-01 12:34:56"
+        post:
+            tags:
+                - API
+            summary: Create a task
+            description: |
+                할 일 목록을 만들기
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                title:
+                                    type: string
+                                    description: 제목
+                                    example: "과제하기"
+                                contents:
+                                    type: string
+                                    description: 내용
+                                    example: "1강부터 3강까지 공부해야함"
+            responses:
+                '200':
+                    description: 할 일을 성공적으로 생성함.
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: string
+                                        description: Task의 식별자
+                                        example: 01BX5ZZKBKACTAV9WEVGEMMVRY
+                                    title:
+                                        type: string
+                                        description: 할 일에 대한 간단한 설명
+                                        example: 과제하기
+                                    contents:
+                                        type: string
+                                        description: 자세한 설명
+                                        example: 1강부터 3강까지 공부해야함
+                                    createdAt:
+                                        type: string
+                                        description: 할 일 등록 일시 (UTC)
+                                        example: "2024-10-01 12:34:56"
 
-    put:
-      tags:
-        - API
-      summary: Update a task
-      description: |
-        할 일 수정하기 (전체 업데이트)
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                title:
-                  type: string
-                  description: 제목
-                  example: "과제하기"
-                contents:
-                  type: string
-                  description: 내용
-                  example: "4강부터 5강까지 공부해야함"
-      responses:
-        '200':
-          description: 할 일을 성공적으로 업데이트함.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    description: Task의 식별자
-                    example: 01BX5ZZKBKACTAV9WEVGEMMVRY
-                  title:
-                    type: string
-                    description: 할 일에 대한 간단한 설명
-                    example: 과제하기
-                  contents:
-                    type: string
-                    description: 자세한 설명
-                    example: 5강부터 10강까지 공부해야함
-                  updatedAt:
-                    type: string
-                    description: 할 일 수정 일시 (UTC)
-                    example: "2024-10-02 12:34:56"
-  /tasks/{taskId}:
-    patch:
-      tags:
-        - API
-      summary: Finish a task
-      description: |
-        할 일 수정하기 (부분 업데이트)
-      parameters:
-        - name: taskId
-          in: path
-          required: true
-          schema:
-            type: string
-            description: Task의 식별자
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                title:
-                  type: string
-                  description: 제목
-                  example: "과제하기"
-                contents:
-                  type: string
-                  description: 내용
-                  example: "5강부터 10강까지 공부해야함"
-                taskDone:
-                  type: boolean
-                  description: 할 일이 완료되었는지 여부
-                  example: true
-      responses:
-        '200':
-          description: 할 일을 성공적으로 수정함.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    description: Task의 식별자
-                    example: 01BX5ZZKBKACTAV9WEVGEMMVRY
-                  title:
-                    type: string
-                    description: 할 일에 대한 간단한 설명
-                    example: 과제하기
-                  contents:
-                    type: string
-                    description: 자세한 설명
-                    example: 5강부터 10강까지 공부해야함
-                  taskDone:
-                    type: boolean
-                    description: 할 일이 완료되었는지 여부
-                    example: true
-                  updatedAt:
-                    type: string
-                    description: 할 일 수정 일시 (UTC)
-                    example: "2024-10-02 12:34:56"
+        put:
+            tags:
+                - API
+            summary: Update a task
+            description: |
+                할 일 수정하기 (전체 업데이트)
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: string
+                                    description: 고유아이디
+                                    example: "zcsdaqwe"
+                                title:
+                                    type: string
+                                    description: 제목
+                                    example: "과제하기"
+                                contents:
+                                    type: string
+                                    description: 내용
+                                    example: "4강부터 5강까지 공부해야함"
+            responses:
+                '200':
+                    description: 할 일을 성공적으로 업데이트함.
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: string
+                                        description: Task의 식별자
+                                        example: zcsdaqwe
+                                    title:
+                                        type: string
+                                        description: 할 일에 대한 간단한 설명
+                                        example: 과제하기
+                                    contents:
+                                        type: string
+                                        description: 자세한 설명
+                                        example: 5강부터 10강까지 공부해야함
+                                    updatedAt:
+                                        type: string
+                                        description: 할 일 수정 일시 (UTC)
+                                        example: "2024-10-02 12:34:56"
+    /tasks/{taskId}:
+        patch:
+            tags:
+                - API
+            summary: Finish a task
+            description: |
+                할 일 수정하기 (부분 업데이트)
+            parameters:
+                - name: taskId
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+                      description: Task의 식별자
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                title:
+                                    type: string
+                                    description: 제목
+                                    example: "과제하기"
+                                contents:
+                                    type: string
+                                    description: 내용
+                                    example: "5강부터 10강까지 공부해야함"
+                                taskDone:
+                                    type: boolean
+                                    description: 할 일이 완료되었는지 여부
+                                    example: true
+            responses:
+                '200':
+                    description: 할 일을 성공적으로 수정함.
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: string
+                                        description: Task의 식별자
+                                        example: 01BX5ZZKBKACTAV9WEVGEMMVRY
+                                    title:
+                                        type: string
+                                        description: 할 일에 대한 간단한 설명
+                                        example: 과제하기
+                                    contents:
+                                        type: string
+                                        description: 자세한 설명
+                                        example: 5강부터 10강까지 공부해야함
+                                    taskDone:
+                                        type: boolean
+                                        description: 할 일이 완료되었는지 여부
+                                        example: true
+                                    updatedAt:
+                                        type: string
+                                        description: 할 일 수정 일시 (UTC)
+                                        example: "2024-10-02 12:34:56"
 
-    delete:
-      tags:
-        - API
-      summary: Delete a task
-      description: |
-        할 일 삭제하기
-      parameters:
-        - name: taskId
-          in: path
-          required: true
-          schema:
-            type: string
-            description: Task의 식별자
-      responses:
-        '200':
-          description: 할 일을 성공적으로 삭제함.
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    description: Task의 식별자
-                    example: 01BX5ZZKBKACTAV9WEVGEMMVRY
-                  deletedAt:
-                    type: string
-                    description: 할 일 삭제 일시 (UTC)
-                    example: "2024-10-02 12:34:56"
-                  isDeleted:
-                    type: boolean
-                    description: 삭제 여부
-                    example: true
+        delete:
+            tags:
+                - API
+            summary: Delete a task
+            description: |
+                할 일 삭제하기
+            parameters:
+                - name: taskId
+                  in: path
+                  required: true
+                  schema:
+                      type: string
+                      description: Task의 식별자
+            responses:
+                '200':
+                    description: 할 일을 성공적으로 삭제함.
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: string
+                                        description: Task의 식별자
+                                        example: 01BX5ZZKBKACTAV9WEVGEMMVRY
+                                    deletedAt:
+                                        type: string
+                                        description: 할 일 삭제 일시 (UTC)
+                                        example: "2024-10-02 12:34:56"
+                                    isDeleted:
+                                        type: boolean
+                                        description: 삭제 여부
+                                        example: true
