@@ -38,7 +38,7 @@ public class TaskController {
 
     @GetMapping("/finish")
     public TodoListResponseDto finishedList() {
-        List<TodoElements> todoList = todo.getFilishedList();
+        List<TodoElements> todoList = todo.getFiishedList();
         return TodoListResponseDto.of(todoList);
     }
 
