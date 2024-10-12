@@ -34,10 +34,10 @@ public class InMemoryTodoRepository implements TodoRepository {
         for (int i = 0; i < todo.size(); i++) {
             TodoElements existingTodo = todo.get(i);
             if (existingTodo.getId().equals(updatedTodo.getId())) {
-                todo.set(i, updatedTodo); // 기존 항목을 새로운 항목으로 교체
+                todo.set(i, updatedTodo);
                 System.out.println(todo.get(i));
                 System.out.println(updatedTodo.getTitle());
-                return; // 업데이트 후 메서드 종료
+                return;
             }
         }
 

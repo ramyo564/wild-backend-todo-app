@@ -72,4 +72,17 @@ public class TaskController {
         );
     }
 
+    @PatchMapping("/{taskId}")
+    public TodoTaskDoneResponseDto update(
+            @PathVariable String taskId
+    ) {
+        TodoElements todoTaskDoneResponse = todo.taskDone(taskId);
+        return new TodoTaskDoneResponseDto(
+                todoTaskDoneResponse.getId(),
+                todoTaskDoneResponse.getTitle(),
+                todoTaskDoneResponse.getContent(),
+                todoTaskDoneResponse.getCreatedAt(),
+                todoTaskDoneResponse.isTaskDone()
+        );
+    }
 }

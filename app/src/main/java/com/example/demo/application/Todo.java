@@ -51,4 +51,9 @@ public class Todo {
         return todo.updateTodo(title, content);
     }
 
+    public TodoElements taskDone(String taskId) {
+        TodoElements todo = todoRepository.getById(taskId);
+        todoRepository.save(todo.taskDone());
+        return todoRepository.getById(taskId);
+    }
 }

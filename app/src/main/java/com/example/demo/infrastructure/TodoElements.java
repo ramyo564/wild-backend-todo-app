@@ -75,4 +75,16 @@ public class TodoElements {
                 this.deletedAt
         );
     }
+    public TodoElements taskDone() {
+        return new TodoElements(
+                this.id,
+                this.title,
+                this.content,
+                this.isDeleted,
+                true,
+                this.createdAt,
+                this.updatedAt,
+                this.deletedAt
+        );
+    }
 }
