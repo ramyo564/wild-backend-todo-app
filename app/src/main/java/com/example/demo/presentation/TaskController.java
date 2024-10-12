@@ -5,9 +5,12 @@ import com.example.demo.infrastructure.TodoElements;
 import com.example.demo.presentation.dto.TodoListResponseDto;
 import com.example.demo.presentation.dto.TodoRequestDto;
 import com.example.demo.presentation.dto.TodoResponseDto;
+import com.example.demo.presentation.dto.TodoTaskDoneResponseDto;
 import com.example.demo.presentation.dto.TodoUpdateRequestDto;
 import com.example.demo.presentation.dto.TodoUpdatedResponseDto;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,8 +29,14 @@ public class TaskController {
     }
 
     @GetMapping
-    public TodoListResponseDto list() {
+    public TodoListResponseDto todoList() {
         List<TodoElements> todoList = todo.getTodoList();
+        return TodoListResponseDto.of(todoList);
+    }
+
+    @GetMapping("/finish")
+    public TodoListResponseDto finishedList() {
+        List<TodoElements> todoList = todo.getFilishedList();
         return TodoListResponseDto.of(todoList);
     }
 
@@ -62,4 +71,5 @@ public class TaskController {
                 todoElements.getCreatedAt()
         );
     }
+
 }
