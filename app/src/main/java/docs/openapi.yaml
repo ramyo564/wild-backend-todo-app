@@ -263,3 +263,46 @@ paths:
                                         type: boolean
                                         description: 삭제 여부
                                         example: true
+    /tasks/finish:
+        get:
+            tags:
+                - API
+            summary: Get Finished all tasks
+            description: |
+                완료된 할 일 목록을 얻는다.
+            responses:
+                '200':
+                    description: 완료된 할 일 목록을 올바르게 얻음.
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    tasks:
+                                        type: array
+                                        description: 완료된 할 일 목록 배열
+                                        items:
+                                            type: object
+                                            properties:
+                                                id:
+                                                    type: string
+                                                    description: Task의 식별자
+                                                    example: 01BX5ZZKBKACTAV9WEVGEMMVRY
+                                                title:
+                                                    type: string
+                                                    description: 할 일에 대한 간단한 설명
+                                                    example: 과제하기
+                                                contents:
+                                                    type: string
+                                                    description: 자세한 설명
+                                                    example: 1강부터 3강까지 공부해야함
+                                                createdAt:
+                                                    type: string
+                                                    description: 할 일 등록 일시 (UTC)
+                                                    example: "2024-10-01 12:34:56"
+                            example:
+                                tasks:
+                                    - id: "01BX5ZZKBKACTAV9WEVGEMMVRY"
+                                      title: "과제하기"
+                                      contents: "1강부터 3강까지 공부해야함"
+                                      createdAt: "2024-10-01 12:34:56"
