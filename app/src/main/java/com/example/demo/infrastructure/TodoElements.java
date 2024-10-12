@@ -87,4 +87,17 @@ public class TodoElements {
                 this.deletedAt
         );
     }
+
+    public TodoElements delete() {
+        return new TodoElements(
+                this.id,
+                this.title,
+                this.content,
+                true,
+                this.taskDone,
+                this.createdAt,
+                this.updatedAt,
+                LocalDateTime.now()
+        );
+    }
 }

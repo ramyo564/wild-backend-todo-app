@@ -19,12 +19,14 @@ public class Todo {
     }
 
     public List<TodoElements> getTodoList() {
-        return todoRepository.getAll().stream().filter(todoElement -> !todoElement.isTaskDone())
+        return todoRepository.getAll().stream().filter(
+                todoElement -> !todoElement.isTaskDone() && !todoElement.isDeleted())
                 .collect(Collectors.toList());
     }
 
     public List<TodoElements> getFilishedList() {
-        return todoRepository.getAll().stream().filter(TodoElements::isTaskDone)
+        return todoRepository.getAll().stream().filter(
+                todoElement -> todoElement.isTaskDone() && !todoElement.isDeleted())
                 .collect(Collectors.toList());
     }
 
@@ -54,6 +56,12 @@ public class Todo {
     public TodoElements taskDone(String taskId) {
         TodoElements todo = todoRepository.getById(taskId);
         todoRepository.save(todo.taskDone());
+        return todoRepository.getById(taskId);
+    }
+
+    public TodoElements delete(String taskId) {
+        TodoElements todo = todoRepository.getById(taskId);
+        todoRepository.save(todo.delete());
         return todoRepository.getById(taskId);
     }
 }

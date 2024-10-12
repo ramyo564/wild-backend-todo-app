@@ -2,6 +2,7 @@ package com.example.demo.presentation;
 
 import com.example.demo.application.Todo;
 import com.example.demo.infrastructure.TodoElements;
+import com.example.demo.presentation.dto.TodoDeletedResponseDto;
 import com.example.demo.presentation.dto.TodoListResponseDto;
 import com.example.demo.presentation.dto.TodoRequestDto;
 import com.example.demo.presentation.dto.TodoResponseDto;
@@ -87,5 +88,17 @@ public class TaskController {
         );
     }
 
-
+    @DeleteMapping("/{taskId}")
+    public TodoDeletedResponseDto delete(
+            @PathVariable String taskId
+    ) {
+        TodoElements todoTaskDoneResponse = todo.delete(taskId);
+        return new TodoDeletedResponseDto(
+                todoTaskDoneResponse.getId(),
+                todoTaskDoneResponse.getTitle(),
+                todoTaskDoneResponse.getContent(),
+                todoTaskDoneResponse.getDeletedAt(),
+                todoTaskDoneResponse.isDeleted()
+        );
+    }
 }
