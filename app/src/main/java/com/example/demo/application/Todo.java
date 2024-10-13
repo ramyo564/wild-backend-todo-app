@@ -58,9 +58,11 @@ public class Todo {
 
     public TodoElements update(String id, String title, String content) {
         TodoElements todo = todoRepository.getById(id);
-
-        todoRepository.save(todo.updateTodo(title, content));
-        return todo.updateTodo(title, content);
+        if (todo == null) {
+            throw new IllegalArgumentException("Todo with id " + id + " not found");
+        }
+        TodoElements updatedTodo = todo.updateTodo(title, content);
+        return todoRepository.save(updatedTodo);
     }
 
     public TodoElements taskDone(String taskId) {
