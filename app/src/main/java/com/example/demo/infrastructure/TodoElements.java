@@ -1,6 +1,7 @@
 package com.example.demo.infrastructure;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class TodoElements {
     private String id;
@@ -99,5 +100,35 @@ public class TodoElements {
                 this.updatedAt,
                 LocalDateTime.now()
         );
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TodoElements that = (TodoElements) o;
+        return isDeleted == that.isDeleted &&
+                taskDone == that.taskDone &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(title, that.title) &&
+                Objects.equals(content, that.content);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, content, isDeleted, taskDone);
+    }
+
+    @Override
+    public String toString() {
+        return "TodoElements{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", isDeleted=" + isDeleted +
+                ", taskDone=" + taskDone +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", deletedAt=" + deletedAt +
+                '}';
     }
 }
