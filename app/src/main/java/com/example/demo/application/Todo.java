@@ -36,7 +36,7 @@ public class Todo {
                         todoElement -> !todoElement.isTaskDone() && !todoElement.isDeleted())
                 .toList();
 
-        if (todoList.size() > 11){
+        if (todoList.size() > 9){
             throw new TodoLimitExceededException();
         }
 
