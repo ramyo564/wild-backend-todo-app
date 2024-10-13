@@ -9,6 +9,6 @@ public interface TodoRepository {
 
     void create(TodoElements todoElements);
 
-    void save(TodoElements updatedTodo);
+    TodoElements save(TodoElements updatedTodo);
 
 }
