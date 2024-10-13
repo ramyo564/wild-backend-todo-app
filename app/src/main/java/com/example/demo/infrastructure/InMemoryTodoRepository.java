@@ -42,15 +42,4 @@ public class InMemoryTodoRepository implements TodoRepository {
         }
 
     }
-
-
-    @Override
-    public void taskDone() {
-
-    }
-
-    @Override
-    public void delete() {
-
-    }
 }

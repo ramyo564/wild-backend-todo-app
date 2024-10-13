@@ -11,7 +11,4 @@ public interface TodoRepository {
 
     void save(TodoElements updatedTodo);
 
-    void taskDone();
-
-    void delete();
 }
