@@ -3,7 +3,7 @@ package com.example.demo.presentation;
 import com.example.demo.application.Todo;
 import com.example.demo.infrastructure.TodoElements;
 import com.example.demo.infrastructure.TodoRepository;
-import com.example.demo.presentation.dto.TodoUpdateRequestDto;
+import com.example.demo.presentation.dto.requestDto.TodoUpdateRequestDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -140,15 +140,15 @@ class TaskControllerTest {
 
     @Test
     void update() throws Exception {
-        String todoId = "id1";
+        String taskId = "id1";
         String updatedTitle = "업데이트된 제목";
         String updatedContent = "업데이트된 내용";
 
         TodoUpdateRequestDto todoUpdateRequestDto =
-                new TodoUpdateRequestDto(todoId, updatedTitle, updatedContent);
+                new TodoUpdateRequestDto(updatedTitle, updatedContent);
 
         TodoElements updatedTodoElements = new TodoElements(
-                todoId,
+                taskId,
                 updatedTitle,
                 updatedContent,
                 false,
@@ -158,11 +158,11 @@ class TaskControllerTest {
                 null
         );
 
-        when(todo.update(todoId, updatedTitle, updatedContent))
+        when(todo.update(taskId, updatedTitle, updatedContent))
                 .thenReturn(updatedTodoElements);
 
 
-        mockMvc.perform(put("/tasks")
+        mockMvc.perform(patch("/tasks/{taskId}", taskId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
                                 {
@@ -170,16 +170,16 @@ class TaskControllerTest {
                                     "title": "%s",
                                     "content": "%s"
                                 }
-                                """.formatted(todoId, updatedTitle, updatedContent)))
+                                """.formatted(taskId, updatedTitle, updatedContent)))
 
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(
                         MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").value(todoId))
+                .andExpect(jsonPath("$.id").value(taskId))
                 .andExpect(jsonPath("$.title").value(updatedTitle))
                 .andExpect(jsonPath("$.content").value(updatedContent));
 
-        Mockito.verify(todo).update(todoId, updatedTitle, updatedContent);
+        Mockito.verify(todo).update(taskId, updatedTitle, updatedContent);
 
     }
 

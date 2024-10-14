@@ -2,20 +2,18 @@ package com.example.demo.presentation;
 
 import com.example.demo.application.Todo;
 import com.example.demo.infrastructure.TodoElements;
-import com.example.demo.presentation.dto.TodoDeletedResponseDto;
-import com.example.demo.presentation.dto.TodoListResponseDto;
-import com.example.demo.presentation.dto.TodoRequestDto;
-import com.example.demo.presentation.dto.TodoResponseDto;
-import com.example.demo.presentation.dto.TodoTaskDoneResponseDto;
-import com.example.demo.presentation.dto.TodoUpdateRequestDto;
-import com.example.demo.presentation.dto.TodoUpdatedResponseDto;
+import com.example.demo.presentation.dto.requestDto.TodoRequestDto;
+import com.example.demo.presentation.dto.requestDto.TodoUpdateRequestDto;
+import com.example.demo.presentation.dto.responseDto.TodoDeletedResponseDto;
+import com.example.demo.presentation.dto.responseDto.TodoListResponseDto;
+import com.example.demo.presentation.dto.responseDto.TodoResponseDto;
+import com.example.demo.presentation.dto.responseDto.TodoTaskDoneResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -62,35 +60,33 @@ public class TaskController {
         );
     }
 
-    @PutMapping
-    public TodoUpdatedResponseDto update(
-            @RequestBody
+    @PatchMapping("/{taskId}")
+    public TodoTaskDoneResponseDto updateOrTaskDone(
+            @PathVariable String taskId,
+            @RequestBody(required = false)
             TodoUpdateRequestDto todoUpdateRequestDto
     ) {
-        TodoElements todoElements = todo.update(
-                todoUpdateRequestDto.id(),
-                todoUpdateRequestDto.title(),
-                todoUpdateRequestDto.content());
-        return new TodoUpdatedResponseDto(
-                todoElements.getId(),
-                todoElements.getTitle(),
-                todoElements.getContent(),
-                todoElements.getCreatedAt()
-        );
-    }
+        if (todoUpdateRequestDto == null) {
+            TodoElements todoTaskDoneResponse = todo.taskDone(taskId);
+            return new TodoTaskDoneResponseDto(
+                    todoTaskDoneResponse.getId(),
+                    todoTaskDoneResponse.getTitle(),
+                    todoTaskDoneResponse.getContent(),
+                    todoTaskDoneResponse.getCreatedAt(),
+                    todoTaskDoneResponse.isTaskDone());
+        } else {
+            TodoElements todoElements = todo.update(
+                    taskId,
+                    todoUpdateRequestDto.title(),
+                    todoUpdateRequestDto.content());
+            return new TodoTaskDoneResponseDto(
+                    todoElements.getId(),
+                    todoElements.getTitle(),
+                    todoElements.getContent(),
+                    todoElements.getUpdatedAt(),
+                    todoElements.isTaskDone());
+        }
 
-    @PatchMapping("/{taskId}")
-    public TodoTaskDoneResponseDto taskDone(
-            @PathVariable String taskId
-    ) {
-        TodoElements todoTaskDoneResponse = todo.taskDone(taskId);
-        return new TodoTaskDoneResponseDto(
-                todoTaskDoneResponse.getId(),
-                todoTaskDoneResponse.getTitle(),
-                todoTaskDoneResponse.getContent(),
-                todoTaskDoneResponse.getCreatedAt(),
-                todoTaskDoneResponse.isTaskDone()
-        );
     }
 
     @DeleteMapping("/{taskId}")
