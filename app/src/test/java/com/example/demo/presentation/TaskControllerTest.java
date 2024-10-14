@@ -107,7 +107,8 @@ class TaskControllerTest {
     void finishedList() throws Exception {
         when(todo.getFinishedList()).thenReturn(todoElementsList);
 
-        mockMvc.perform(get("/tasks/finish"))
+        mockMvc.perform(get("/tasks")
+                        .param("completed","true"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(
                         MediaType.APPLICATION_JSON))

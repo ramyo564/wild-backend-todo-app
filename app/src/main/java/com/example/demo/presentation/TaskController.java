@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,15 +34,16 @@ public class TaskController {
     }
 
     @GetMapping
-    public TodoListResponseDto todoList() {
-        List<TodoElements> todoList = todo.getTodoList();
-        return TodoListResponseDto.of(todoList);
-    }
-
-    @GetMapping("/finish")
-    public TodoListResponseDto finishedList() {
-        List<TodoElements> todoList = todo.getFinishedList();
-        return TodoListResponseDto.of(todoList);
+    public TodoListResponseDto todoList(
+            @RequestParam(defaultValue = "false") boolean completed
+    ) {
+        if (!Boolean.TRUE.equals(completed)) {
+            List<TodoElements> todoList = todo.getTodoList();
+            return TodoListResponseDto.of(todoList);
+        } else {
+            List<TodoElements> todoList = todo.getFinishedList();
+            return TodoListResponseDto.of(todoList);
+        }
     }
 
     @PostMapping
